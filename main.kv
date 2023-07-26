@@ -1,0 +1,292 @@
+<LoginWindow>:
+    BoxLayout:
+        orientation:'vertical'
+        pos_hint:{'center_y': .85, 'center_x': .5}
+        Label:
+            text:'Bem vindo(a) ao ESGE'
+            font_size:'18sp'
+            id:msg
+    BoxLayout:
+        size_hint_y: .4
+        size_hint_x: .8
+        orientation:'vertical'
+        pos_hint:{'center_y': .58, 'center_x': .5}
+        Label:
+            text: 'Usuário: '
+            text_size: self.size
+            halign: 'left'
+            valign: 'middle'
+        TextInput:
+            id: nome
+            size_hint_y: None
+            size: '50dp','28dp'
+        Label:
+            text: 'Senha:'
+            text_size: self.size
+            halign: 'left'
+            valign: 'middle'
+        TextInput:
+            id: senha
+            password: True
+            size_hint_y: None
+            size: '50dp','30dp'
+    BoxLayout:
+        orientation:'vertical'
+        spacing: '10dp'
+        pos_hint:{'center_y': .63, 'center_x': .75}
+        MDRoundFlatButton:
+            text: 'Entrar'
+            size_hint_x: .5
+            size_hint_y: None
+            size: '80dp','40dp'
+            on_release: root.Acessar()
+        MDRoundFlatButton:
+            text: 'Criar conta'
+            size_hint_x: .5
+            size_hint_y: None
+            size: '80dp','40dp'
+            on_press: root.manager.current = 'CadastroUsuario'
+<HomeWindow>:
+    FloatLayout:
+        # orientation:'vertical'
+        # size_hint_y: 0.2
+        # pos_hint: {'x':0, 'y': .8}
+        MDIconButton:
+            icon: 'logout'
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            index: 1
+            pos_hint:{'center_y': .9, 'center_x': .9}
+            # on_release: 
+            #     root.manager.transition.direction = 'right'
+            #     root.manager.current = 'login'    
+        Label:
+            id: BLHome
+            text:'Home'
+            size_hint_y:.3
+            pos_hint:{'center_y': .9, 'center_x': .5}
+        GridLayout:
+            rows:3
+            cols:1
+            size_hint_y: .6
+            size_hint_x: .8
+            pos_hint: {'center_y':.5, 'center_x': .5}
+            spacing: '10dp'
+            MDRectangleFlatButton:
+                text: 'Ver items'
+                font_size:'15sp'
+                size_hint: 1,.3
+                on_press:
+                    root.manager.transition.direction = "left" 
+                    root.manager.current = 'AlterarProduto'
+                    # root.AlterarVerItems()
+            MDRectangleFlatButton:
+                text: 'Relatório'
+                font_size:'15sp'
+                size_hint: 1,.3
+                on_press: 
+                    root.manager.current = 'Relatorio'
+                    root.manager.transition.direction = "left"
+            MDRectangleFlatButton:
+                text: 'Cadastrar'
+                font_size:'15sp'
+                size_hint: 1,.3
+                on_press: 
+                    root.manager.current = 'CadastroProduto'
+                    root.manager.transition.direction = "left"
+<CadastroProdutoWindow>:     
+    BoxLayout:
+        orientation:'vertical'
+        size_hint_y: 0.25
+        pos_hint: {'center_y':.89, 'center_x': .5}
+        Label:
+            text:'Cadastro de items'
+            id:msg
+    GridLayout:
+        rows: 8
+        cols: 1
+        size_hint_y: .7
+        size_hint_x: .8
+        # pos_hint: {'x':.099, 'y': .16}
+        pos_hint: {'center_y':.5, 'center_x': .5}
+        padding: 10
+        spacing: 15
+        Label:
+            text: 'Nome'
+            font_size:'14sp'
+            size_hint_x:0.6
+        TextInput:
+            id: nomeProduto
+            size_hint_y: None
+            size: '50dp','28dp'
+        Label:
+            text: 'Quantidade Ideal'
+            font_size:'14sp'
+            size_hint_x:0.6
+        TextInput:
+            id: quantidadeIdeal
+            size_hint_y: None
+            size: '50dp','28dp'
+        Label:
+            text: 'Quantidade Atual'
+            font_size:'14sp'
+            size_hint_x:0.6
+        TextInput:
+            id: quantidadeAtual
+            size_hint_y: None
+            size: '50dp','28dp'
+        MDRoundFlatButton:
+            pos_hint:{'center_x': 0.5}
+            size_hint: .5, .5
+            text: 'Cadastrar'
+            on_press: root.CriarItem()
+        MDRoundFlatButton:
+            pos_hint:{'center_x': 0.5}
+            size_hint: .5, .5
+            text: 'Voltar'
+            on_press: 
+                root.manager.current = 'home'
+                root.manager.transition.direction = "right"
+<ListaProdutoWindow>:
+    MDIconButton:
+        text: 'buscar'
+        icon: 'store-search'
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        # size_hint: .1, .15
+        pos_hint:{'center_y': .17, 'center_x': .11}
+        on_release:
+            root.manager.transition.direction = "left"
+            root.manager.current = 'BuscarProduto'
+    MDIconButton:
+        text: 'Voltar'
+        icon: 'arrow-u-left-top-bold'
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        pos_hint:{'center_y': .08, 'center_x': 0.11}
+        on_release:
+            root.manager.transition.direction = "right"
+            root.manager.current = 'home'
+    MDIconButton:
+        text: 'Ver items'
+        icon: 'refresh'
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        pos_hint:{'center_y': .92, 'center_x': 0.08}
+        on_release:
+            root.ExibirItems()
+
+<BuscarProdutoWindow>:
+    FloatLayout:
+        BoxLayout:
+            orientation:'vertical'
+            pos_hint:{'center_y': .899}
+            Label:
+                text:'Busca de items'
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y: .05
+            size_hint_x: .89
+            pos_hint:{'center_y': .799, 'center_x': .53}
+            TextInput:
+                id:itemBusca
+                size_hint_y: None
+                size: '30dp', '30dp'
+            MDIconButton:
+                icon: 'store-search'
+                on_press:
+                    root.LimparGrid()
+                on_release:
+                    root.ExibirProduto()  
+
+        MDIconButton:
+            icon: 'arrow-u-left-top-bold'
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            # size_hint: .1, .2
+            index: 1
+            # pos_hint:{'center_y': .08, 'center_x': .06}
+            pos_hint:{'center_y': .15, 'center_x': .11}
+            on_press:
+                root.LimparGrid()
+            on_release: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'AlterarProduto'
+
+<RelatorioItemsWindow>:
+    FloatLayout:
+        Label:
+            text:'Relatório'
+            pos_hint:{'center_y': .87, 'center_x': .5}
+        MDIconButton:
+            icon: 'arrow-u-left-top-bold'
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            # size_hint: .1, .2
+            index: 1
+            # pos_hint:{'center_y': .08, 'center_x': .06}
+            pos_hint:{'center_y': .12, 'center_x': .11}
+            # on_press:
+            #     root.LimparGrid()
+            on_release: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'home'
+        MDIconButton:
+            text: 'Ver items'
+            icon: 'refresh'
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            pos_hint:{'center_y': .8, 'center_x': 0.08}
+            on_press:
+                root.LimparGrid()
+            on_release:
+                root.ExibirItems()
+<CadastroUsuarioWindow>:
+    FloatLayout:
+        Label:
+            id:msg
+            text:'Criar uma conta'
+            pos_hint:{'center_y': .87, 'center_x': .5}
+        BoxLayout:
+            size_hint_y: .4
+            size_hint_x: .8
+            orientation:'vertical'
+            pos_hint:{'center_y': .58, 'center_x': .5}
+            Label:
+                text: 'Usuário: '
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+            TextInput:
+                id: nome
+                size_hint_y: None
+                size: '50dp','28dp'
+            Label:
+                text: 'Senha:'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+            TextInput:
+                id: senha
+                password: True
+                size_hint_y: None
+                size: '50dp','30dp'
+        BoxLayout:
+            orientation:'vertical'
+            spacing: '10dp'
+            pos_hint:{'center_y': .68, 'center_x': .75}
+            MDRoundFlatButton:
+                text: 'Criar'
+                size_hint_x: .5
+                size_hint_y: None
+                size: '80dp','40dp'
+                on_release: root.CadastrarUsuario()
+        MDIconButton:
+            icon: 'arrow-u-left-top-bold'
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            index: 1
+            pos_hint:{'center_y': .15, 'center_x': .11}
+            on_release: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'login'
